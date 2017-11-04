@@ -1,0 +1,41 @@
+---
+
+- name: "Provision a new {{ middleman_instance_name }} instance in {{ target_env }}"
+  ec2:
+    count_tag:
+      Env: "{{ target_env }}"
+      Name: "{{ middleman_instance_name }}"
+      Experiment: "{{ experiment_name }}"
+    group: "{{ target_security_group }}"
+    region: "{{ target_region }}"
+    profile: "{{ aws_profile }}"
+    vpc_subnet_id: "{{ target_subnet }}"
+    image: "{{ linux_ami_id }}"
+    instance_type: "{{ linux_instance_type }}"
+    exact_count: "1"
+    wait: yes
+    wait_timeout: 60
+    key_name: "{{ aws_ssh_key_pair }}"
+    instance_tags:
+      Env: "{{ target_env }}"
+      Name: "{{ middleman_instance_name }}"
+      Experiment: "{{ experiment_name }}"
+    assign_public_ip: "yes"
+  register: fresh_middlemen
+  delegate_to: localhost
+
+- name: Add the new instances to middlemen group
+  add_host:
+    hostname: "{{ item.public_dns_name }}"
+    groupname: "middlemen"
+  with_items: "{{ fresh_middlemen.tagged_instances }}"
+
+- debug:
+    var: groups['middlemen']
+
+- name: Wait for the new instance to have SSH up
+  wait_for:
+    port: 22
+    host: "{{ item.public_ip }}"
+    timeout: 180
+  with_items: "{{ fresh_middlemen.tagged_instances }}"

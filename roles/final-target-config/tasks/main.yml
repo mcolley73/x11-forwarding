@@ -1,0 +1,20 @@
+---
+
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    gpgcheck: no
+    state: present
+    enabled: yes
+    baseurl: https://download-ib01.fedoraproject.org/pub/epel//7/x86_64/
+    # includepkgs:
+    #   - xorg-x11-server-utils
+  become: yes
+
+- name: Need xorg-x11-server-utils
+  yum:
+    name: xorg-x11-server-utils
+    state: latest
+    validate_certs: no
+  become: yes

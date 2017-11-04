@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  connection: local
+
+  roles:
+    - sec-groups
+    - middleman
+    - dynamic-inventory
+
+- hosts: middlemen
+  roles:
+    - middleman-config

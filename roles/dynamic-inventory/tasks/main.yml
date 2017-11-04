@@ -1,0 +1,40 @@
+---
+
+- ec2_remote_facts:
+    profile: "{{ aws_profile }}"
+    region: "{{ target_region }}"
+    filters:
+      instance-state-name: running
+      "tag:Name": "{{ middleman_instance_name }}"
+      "tag:Env": "{{ target_env }}"
+      "tag:Experiment": "{{ experiment_name }}"
+  register: middlemen_facts
+
+- debug:
+    var: middlemen_facts
+
+- name: Add the middlemen instances to the middlemen group
+  add_host:
+    hostname: "{{ item.public_dns_name }}"
+    groupname: "middlemen"
+  with_items: "{{ middlemen_facts.instances }}"
+
+
+- ec2_remote_facts:
+    profile: "{{ aws_profile }}"
+    region: "{{ target_region }}"
+    filters:
+      instance-state-name: running
+      "tag:Name": "{{ target_instance_name }}"
+      "tag:Env": "{{ target_env }}"
+      "tag:Experiment": "{{ experiment_name }}"
+  register: final_target_facts
+
+- debug:
+    var: final_target_facts
+
+- name: Add the target instances to the target group
+  add_host:
+    hostname: "{{ item.public_dns_name }}"
+    groupname: "finaltargets"
+  with_items: "{{ final_target_facts.instances }}"

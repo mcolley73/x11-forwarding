@@ -1,0 +1,40 @@
+---
+
+- name: X11 Forwarding Testing Security Group
+  ec2_group:
+    name: "{{ target_security_group }}"
+    description: "{{ target_security_group_desc }}"
+    region: "{{ target_region }}"
+    vpc_id: "{{ target_vpc }}"
+    state: present
+    profile: "{{ aws_profile }}"
+    tags:
+      Experiment: "{{ experiment_name }}"
+      Name: "{{ target_security_group }}"
+      Env: "{{ target_env }}"
+    rules:
+      # Allow inbound SSH from our trusted source or use within subnet
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: "{{ trusted_network_cidr }}"
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: "{{ target_subnet_cidr_block }}"
+    rules_egress:
+      # And we should be able to proxy to rest of our subnet
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: "{{ target_subnet_cidr_block }}"
+      # Need to be able to hit a RedHat package site
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+      # Need to be able to hit a RedHat package site
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0

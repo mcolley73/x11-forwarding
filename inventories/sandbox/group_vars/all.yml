@@ -1,0 +1,24 @@
+experiment_name: "x11-forwarding"
+
+target_env: sandbox
+target_region: us-west-2
+target_az: a
+
+aws_profile: "bastion-builder"
+aws_ssh_key_pair: "sandbox-deploy-pair"
+
+target_vpc: "vpc-2f85c349"
+target_subnet: "subnet-2e72c766"
+target_subnet_cidr_block: "172.29.32.0/20"
+
+target_security_group: "x11-forwarding-sec-group"
+target_security_group_desc: "Sec Group for testing X11 Forwarding"
+
+target_instance_name: "{{ target_env }}-final-target-instance"
+
+middleman_instance_name: "{{ target_env }}-middleman-instance"
+
+trusted_network_cidr: "68.36.23.122/32" # Your house or corporate, perhaps
+
+linux_ami_id: "ami-9fa343e7" #RHEL-7.4_HVM_GA-20170808-x86_64-2-Hourly2-GP2
+linux_instance_type: "t2.micro"

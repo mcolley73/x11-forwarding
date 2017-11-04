@@ -1,0 +1,72 @@
+---
+# - name: Add EPEL repository
+#   yum_repository:
+#     name: epel
+#     description: EPEL YUM repo
+#     gpgcheck: no
+#     state: present
+#     enabled: yes
+#     baseurl: https://download-ib01.fedoraproject.org/pub/epel//7/x86_64/
+#     metalink: https://download-ib01.fedoraproject.org/pub/epel//7/x86_64/repodata/repomd.xml
+#     # includepkgs:
+#     #   - xorg-x11-server-utils
+#   become: yes
+
+- name: Need xauth for our jump
+  yum:
+    name: xauth
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Need xclock for our jump
+  yum:
+    name: xclock
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Overwrite the sshd_config
+  copy:
+    backup: yes
+    src: 'files/sshd_config'
+    dest: '/etc/ssh/sshd_config'
+  register: sshd_changes
+  become: yes
+
+- service:
+    name: sshd
+    state: started
+
+#
+# - name: sshd - Allow TCP Forwarding
+#   lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^.*AllowTcpForwarding'
+#     line: 'AllowTcpForwarding yes'
+#     state: present
+#   become: yes
+#
+# - name: sshd - Enable Gateway Ports
+#   lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^.*GatewayPorts'
+#     line: 'GatewayPorts yes'
+#     state: present
+#   become: yes
+#
+# - name: sshd - Allow X11Forwarding
+#   lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^.*X11Forwarding'
+#     line: 'X11Forwarding yes'
+#     state: present
+#   become: yes
+#
+# - name: sshd - Ensure X11 Display Offset
+#   lineinfile:
+#     path: /etc/ssh/sshd_config
+#     regexp: '^.*X11DisplayOffset'
+#     line: 'X11DisplayOffset 10'
+#     state: present
+#   become: yes

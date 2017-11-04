@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  connection: local
+
+  roles:
+    - sec-groups
+    - final-target
+
+
+- hosts: finaltargets
+  roles:
+    - final-target-config
