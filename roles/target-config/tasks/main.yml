@@ -1,0 +1,52 @@
+---
+
+- name: Add a Google Repo so we can install chrome
+  yum_repository:
+    name: google-chrome
+    description: Google Repo for Chrome itself
+    baseurl: http://dl.google.com/linux/chrome/rpm/stable/x86_64
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://dl.google.com/linux/linux_signing_key.pub
+  become: yes
+
+- name: Need xauth for our final target
+  yum:
+    name: xauth
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Need xclock on our final target
+  yum:
+    name: xclock
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Chrome for a more advanced test
+  yum:
+    name: google-chrome
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Firefox for a more advanced test
+  yum:
+    name: firefox
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Overwrite the sshd_config
+  copy:
+    backup: yes
+    src: 'files/sshd_config'
+    dest: '/etc/ssh/sshd_config'
+  register: sshd_changes
+  become: yes
+
+- service:
+    name: sshd
+    state: restarted
+  become: yes

@@ -1,10 +1,10 @@
 ---
 
-- name: "Provision a new {{ middleman_instance_name }} instance in {{ target_env }}"
+- name: "Provision a new {{ bastion_instance_name }} instance in {{ target_env }}"
   ec2:
     count_tag:
       Env: "{{ target_env }}"
-      Name: "{{ middleman_instance_name }}"
+      Name: "{{ bastion_instance_name }}"
       Experiment: "{{ experiment_name }}"
     group: "{{ target_security_group }}"
     region: "{{ target_region }}"
@@ -18,7 +18,7 @@
     key_name: "{{ aws_ssh_key_pair }}"
     instance_tags:
       Env: "{{ target_env }}"
-      Name: "{{ middleman_instance_name }}"
+      Name: "{{ bastion_instance_name }}"
       Experiment: "{{ experiment_name }}"
     assign_public_ip: "yes"
   register: fresh_middlemen

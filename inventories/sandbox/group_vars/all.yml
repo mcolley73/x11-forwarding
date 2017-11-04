@@ -14,9 +14,9 @@ target_subnet_cidr_block: "172.29.32.0/20"
 target_security_group: "x11-forwarding-sec-group"
 target_security_group_desc: "Sec Group for testing X11 Forwarding"
 
-target_instance_name: "{{ target_env }}-final-target-instance"
+target_instance_name: "{{ target_env }}-target-instance"
 
-middleman_instance_name: "{{ target_env }}-middleman-instance"
+bastion_instance_name: "{{ target_env }}-bastion-instance"
 
 trusted_network_cidr: "68.36.23.122/32" # Your house or corporate, perhaps
 

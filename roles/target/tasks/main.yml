@@ -27,11 +27,11 @@
 - name: Add the new instances to new hosts group
   add_host:
     hostname: "{{ item.public_dns_name }}"
-    groupname: "finaltargets"
+    groupname: "targets"
   with_items: "{{ fresh_instance.tagged_instances }}"
 
 - debug:
-    var: groups['finaltargets']
+    var: groups['targets']
 
 - name: Wait for the new instance to have SSH up
   wait_for:

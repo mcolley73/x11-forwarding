@@ -5,9 +5,9 @@
 
   roles:
     - sec-groups
-    - final-target
+    - target
 
 
-- hosts: finaltargets
+- hosts: targets
   roles:
-    - final-target-config
+    - target-config

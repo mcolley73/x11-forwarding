@@ -4,8 +4,10 @@
   connection: local
 
   roles:
+    - sec-groups
+    - bastion
     - dynamic-inventory
 
 - hosts: middlemen
   roles:
-    - middleman-config
+    - bastion-config
