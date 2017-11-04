@@ -1,20 +1,28 @@
 ---
 
-- name: Add EPEL repository
-  yum_repository:
-    name: epel
-    description: EPEL YUM repo
-    gpgcheck: no
-    state: present
-    enabled: yes
-    baseurl: https://download-ib01.fedoraproject.org/pub/epel//7/x86_64/
-    # includepkgs:
-    #   - xorg-x11-server-utils
-  become: yes
-
-- name: Need xorg-x11-server-utils
+- name: Need xauth for our final target
   yum:
-    name: xorg-x11-server-utils
+    name: xauth
     state: latest
     validate_certs: no
+  become: yes
+
+- name: Need xclock on our final target
+  yum:
+    name: xclock
+    state: latest
+    validate_certs: no
+  become: yes
+
+- name: Overwrite the sshd_config
+  copy:
+    backup: yes
+    src: 'files/sshd_config'
+    dest: '/etc/ssh/sshd_config'
+  register: sshd_changes
+  become: yes
+
+- service:
+    name: sshd
+    state: restarted
   become: yes
