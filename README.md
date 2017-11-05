@@ -65,7 +65,7 @@ X11UseLocalhost no
 
 ## Testing
 After Execution, we should be able to test using XClock. By convention, I will label the
-various command executions with `local`, `bastion`, and `target`.
+various command line executions with `local`, `bastion`, and `target`.
 
 NOTE: You can use Private IPs if you have a VPN. I did not, so I used Public and made
 sure to lock things down further within my Security Group.
