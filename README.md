@@ -144,9 +144,12 @@ Fire up Firefox:
 ```sh
 local $ ssh -Y ec2-user@<target-private-dns>
 [ec2-user@<target-private-ip> ~] firefox https://www.google.com
+<snip>
+boatload of errors
+</snip>
 ```
 
-Eventually, I got it to work by going into the HamburgerMenu->Preferences.
+Eventually, I got it to work by going into the Firefox settings with HamburgerMenu->Preferences.
 
 THEN I was able to change the URL of that tab to `about:config`, and scroll down
 to change 2 settings to false (double click on them in the GUI):
