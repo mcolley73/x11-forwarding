@@ -67,8 +67,8 @@ X11UseLocalhost no
 After Execution, we should be able to test using XClock. By convention, I will label the
 various command line executions with `local`, `bastion`, and `target`.
 
-NOTE: You can use Private IPs if you have a VPN. I did not, so I used Public and made
-sure to lock things down further within my Security Group.
+*NOTE:* You can use Private IPs if you have a VPN. I did not, so I used Public and made
+sure to lock port 22 down well using my Security Group.
 
 Fire up XQuartz on your Mac (or some equivalent on your system) so you can be ready to receive
 the XWindows forwards.
