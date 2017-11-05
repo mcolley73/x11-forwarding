@@ -118,7 +118,9 @@ Last login: Sat Nov  4 22:15:59 2017 from <local-ip>
 
 It works!
 
-### XClock is for Kids
+---
+
+## Chrome
 XClock is a perfect tool for testing things out, but what about a Browser? The code in our
 `target-config` Role installed both Google Chrome and Firefox.
 
@@ -133,3 +135,30 @@ It takes a while, but it'll come up. And we're now running a Browser in our Linu
 and exporting its display all the way back to our `local` screen.
 
 ---
+
+## Firefox
+Firefox wouldn't run without crashing. At first, it would error out whenever I launched a tab.
+
+Fire up Firefox:
+
+```sh
+local $ ssh -Y ec2-user@<target-private-dns>
+[ec2-user@<target-private-ip> ~] firefox https://www.google.com
+```
+
+Eventually, I got it to work by going into the HamburgerMenu->Preferences.
+
+THEN I was able to change the URL of that tab to `about:config`, and scroll down
+to change 2 settings to false (double click on them in the GUI):
+
+```sh
+browser.tabs.remote.autostart = false
+browser.tabs.remote.autostart.2 = false
+```
+
+I got this idea from this URL:
+https://github.com/SeleniumHQ/docker-selenium/issues/388
+
+---
+
+HTH
