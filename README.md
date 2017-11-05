@@ -54,7 +54,7 @@ We should be able to SSH directly to the bastion and use XClock. We need the `-Y
 our X11 forwarding to work.
 
 ```sh
-local $ ssh -Y ec2-user@bastion-public-dns
+local $ ssh -Y ec2-user@<bastion-public-dns>
 Last login: Sat Nov  4 19:58:42 2017 from <local-ip>
 /usr/bin/xauth:  file /home/ec2-user/.Xauthority does not exist
 [ec2-user@<bastion-private-ip> ~] $ xclock
@@ -64,7 +64,7 @@ We should be able to do the exact same test by SSHing directly to the final targ
 using XClock from there. Still need the `-Y` argument.
 
 ```sh
-local $ ssh -Y ec2-user@target-public-dns
+local $ ssh -Y ec2-user@<target-public-dns>
 Last login: Sat Nov  4 19:58:42 2017 from <local-ip>
 /usr/bin/xauth:  file /home/ec2-user/.Xauthority does not exist
 [ec2-user@<target-private-ip> ~] $ xclock
@@ -74,7 +74,7 @@ But our goal is to go *through* the bastion to the target. So what we'd like to 
 SSH to the Private DNS of the target from our local. But if we try it, it won't work:
 
 ```sh
-local $ ssh -Y ec2-user@target-private-dns
+local $ ssh -Y ec2-user@<target-private-dns>
 ssh: Could not resolve hostname <target-private-dns>: nodename nor servname provided, or not known
 local $
 ```
