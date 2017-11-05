@@ -82,7 +82,7 @@ our X11 forwarding to work.
 local $ ssh -Y ec2-user@<bastion-public-dns>
 Last login: Sat Nov  4 19:58:42 2017 from <local-ip>
 /usr/bin/xauth:  file /home/ec2-user/.Xauthority does not exist
-[ec2-user@<bastion-private-ip> ~] $ xclock
+[ec2-user@<bastion-private-ip> ~]$ xclock
 ```
 
 We should be able to do the exact same test by SSHing directly to the final target and
@@ -92,7 +92,7 @@ using XClock from there. Still need the `-Y` argument.
 local $ ssh -Y ec2-user@<target-public-dns>
 Last login: Sat Nov  4 19:58:42 2017 from <local-ip>
 /usr/bin/xauth:  file /home/ec2-user/.Xauthority does not exist
-[ec2-user@<target-private-ip> ~] $ xclock
+[ec2-user@<target-private-ip> ~]$ xclock
 ```
 
 But our goal is to go *through* the bastion to the target. So what we'd like to do is
@@ -139,7 +139,7 @@ ECDSA key fingerprint is SHA256:8dkd8dkd8dkd8dkd8dkd8dkd8dkd8dkd8dkd8dkd+8dkd.
 Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added '<target-private-dns>' (ECDSA) to the list of known hosts.
 Last login: Sat Nov  4 22:15:59 2017 from <local-ip>
-[ec2-user@<target-private-ip> ~] xclock
+[ec2-user@<target-private-ip> ~]$ xclock
 ```
 
 It works!
@@ -154,7 +154,7 @@ Fire up Chrome:
 
 ```sh
 local $ ssh -Y ec2-user@<target-private-dns>
-[ec2-user@<target-private-ip> ~] google-chrome https://www.google.com
+[ec2-user@<target-private-ip> ~]$ google-chrome https://www.google.com
 ```
 
 It takes a while, but it'll come up. And we're now running a Browser in our Linux `target`
@@ -169,7 +169,7 @@ Fire up Firefox:
 
 ```sh
 local $ ssh -Y ec2-user@<target-private-dns>
-[ec2-user@<target-private-ip> ~] firefox https://www.google.com
+[ec2-user@<target-private-ip> ~]$ firefox https://www.google.com
 <snip>
 boatload of errors
 </snip>
@@ -187,6 +187,16 @@ browser.tabs.remote.autostart.2 = false
 
 I got this idea from this URL:
 https://github.com/SeleniumHQ/docker-selenium/issues/388
+
+After changing these settings, you can open a new tab, and even close and re-start, and
+firefox will run clean:
+
+```sh
+local $ ssh -Y ec2-user@<target-private-dns>
+[ec2-user@<target-private-ip> ~]$ firefox https://www.google.com
+<browse for a while, then exit or ctrl-c>
+[ec2-user@<target-private-ip> ~]$
+```
 
 ---
 
