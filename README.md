@@ -103,8 +103,9 @@ Host 172.29.*
 ```
 
 Now, whenever we try to SSH to something in the `172.29.*.*` range, which is the range
-of our *private* IPs in the Subnet, SSH will proxy our traffic through our Bastion using
-the *public* DNS of the bastion itself.
+of our *private* IPs in the Subnet, SSH will proxy our traffic through our bastion using
+the *public* DNS of the bastion itself. We run the same command again but we get better
+results:
 
 ```sh
 local $ ssh -Y ec2-user@<target-private-dns>
