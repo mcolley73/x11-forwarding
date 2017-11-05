@@ -171,7 +171,7 @@ Fire up Firefox:
 local $ ssh -Y ec2-user@<target-private-dns>
 [ec2-user@<target-private-ip> ~]$ firefox https://www.google.com
 <snip>
-boatload of errors
+boatload of errors :(
 </snip>
 ```
 
