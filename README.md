@@ -38,6 +38,31 @@ This project is divided into a few key playbooks and associated Ansible Roles.
 Run each of the above in turn. Doing so will result in the appropriate Security Group
 being created as well.
 
+## X11 `sshd` settings
+There are some key `sshd` settings for the bastion and the target to make things work with
+forwarding.
+
+Bastion (see `roles/bastion-config/files/sshd_config`):
+
+```sh
+GatewayPorts yes
+X11Forwarding yes
+X11DisplayOffset 10
+AllowTcpForwarding yes
+```
+
+Target (see `roles/target-config/files/sshd_config`). Note the extra setting:
+
+```sh
+GatewayPorts yes
+X11Forwarding yes
+X11DisplayOffset 10
+AllowTcpForwarding yes
+
+# Extra setting for final target
+X11UseLocalhost no
+```
+
 ## Testing
 After Execution, we should be able to test using XClock. By convention, I will label the
 various command executions with `local`, `bastion`, and `target`.
