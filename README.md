@@ -18,6 +18,8 @@ You will need an XWindows client so you can see the exported display. I was work
 a MacMini, so I used XQuartz:
 https://www.xquartz.org/
 
+---
+
 ## Inventories
 The VPC and Subnet creation is left up to the reader. Variables in the inventory
 should be changed to work in your environment. Of note:
@@ -62,6 +64,8 @@ AllowTcpForwarding yes
 # Extra setting for final target
 X11UseLocalhost no
 ```
+
+---
 
 ## Testing
 After Execution, we should be able to test using XClock. By convention, I will label the
